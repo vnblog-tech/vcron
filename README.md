@@ -1,5 +1,5 @@
 # Overview
-This project fork from: https://github.com/jhuckaby/Cronicle with some new feature:
+This project fork from: [jhuckaby/Cronicle](https://github.com/jhuckaby/Cronicle) with some new features:
 
 * OAuth 2
 * Vietnamese language
