@@ -1,47 +1,40 @@
 # Overview
-This project fork from: [jhuckaby/Cronicle](https://github.com/jhuckaby/Cronicle) with some new features:
 
-* OAuth 2
-* Vietnamese language
-* Upload new plugin
-* Built-in nodejs plugin
-* Docker
-
-**Cronicle** is a multi-server task scheduler and runner, with a web based front-end UI.  It handles both scheduled, repeating and on-demand jobs, targeting any number of worker servers, with real-time stats and live log viewer.  It's basically a fancy [Cron](https://en.wikipedia.org/wiki/Cron) replacement written in [Node.js](https://nodejs.org/).  You can give it simple shell commands, or write Plugins in virtually any language.
+**VCron** là một trình chạy và lập lịch tác vụ đa máy chủ, với dùng giao diện web dễ dàng sử dụng. Nó xử lý cả công việc theo lịch trình, lặp lại và theo yêu cầu, chọn máy tính mục tiêu để thực hiện tác vụ (thủ công hoặc độ rảnh rỗi của máy tính, ...), với thống kê thời gian thực và xem log trực tiếp qua web. Về cơ bản, nó là một sự thay thế [Cron](https://en.wikipedia.org/wiki/Cron) được viết bằng [Node.js](https://nodejs.org/). Bạn có thể cung cấp cho nó các lệnh shell đơn giản hoặc viết các Plugin bằng hầu hết mọi ngôn ngữ.
 
 ![Main Screenshot](https://pixlcore.com/software/cronicle/screenshots-new/job-details-complete.png)
 
-## Features at a Glance
+## Sơ lược về các tính năng
 
-* Single or multi-server setup.
-* Automated failover to backup servers.
-* Auto-discovery of nearby servers.
-* Real-time job status with live log viewer.
-* Plugins can be written in any language.
-* Schedule events in multiple timezones.
-* Optionally queue up long-running events.
-* Track CPU and memory usage for each job.
-* Historical stats with performance graphs.
-* Simple JSON messaging system for Plugins.
-* Web hooks for external notification systems.
-* Simple REST API for scheduling and running events.
-* API Keys for authenticating remote apps.
+* Thiết lập một hoặc nhiều server.
+* Tự động chuyển đổi sang các server dự phòng.
+* Tự động phát hiện các server lân cận.
+* Trạng thái công việc thời gian thực với trình xem log trực tiếp.
+* Các plugin có thể được viết bằng bất kỳ ngôn ngữ nào.
+* Lên lịch sự kiện trong nhiều múi giờ.
+* Tiến trình cho các hàng đợi sự kiện thực hiện tốn nhiều thời gian.
+* Theo dõi việc sử dụng CPU và bộ nhớ cho từng công việc.
+* Số liệu thống kê lịch sử với biểu đồ hiệu suất.
+* Gửi JSON message giữa các Plugin.
+* Web hooks cho các hệ thống thông báo bên ngoài.
+* API REST đơn giản để lập lịch và chạy các sự kiện.
+* API Keys để xác thực cho các ứng dụng thứ ba. 
 
-## Table of Contents
+## Mục lục
 
-<details><summary>Table of Contents</summary>
+<details><summary>Xem chi tiết</summary>
 
 <!-- toc -->
-* [Glossary](#glossary)
-- [Installation](#installation)
+* [Bảng chú giải](#bảng-chú-giải)
+- [cài đặt](#installation)
 - [Setup](#setup)
-	* [Single Server](#single-server)
-	* [Single Primary with Workers](#single-primary-with-workers)
-	* [Multi-Server Cluster](#multi-server-cluster)
-		+ [Load Balancers](#load-balancers)
-		+ [Ops Notes](#ops-notes)
-- [Configuration](#configuration)
-	* [Basics](#basics)
+	* [Một sever duy nhất](#cài-đặt-với-một-sever-duy-nhất)
+	* [Một server chính với nhiều Workers](#một-server-chính-với-nhiều)
+	* [Cụm nhiều servercluser](#cụm-nhiều-server)
+		+ [Cân bằng tải](#cân-bằng-tải)
+		+ [Ghi chú hoạt động](#ghi-chú-hoạt-động)
+- [Cấu hình](#cấu-hình)
+	* [Cơ bản](#cơ-bản)
 		+ [base_app_url](#base_app_url)
 		+ [email_from](#email_from)
 		+ [smtp_hostname](#smtp_hostname)
@@ -80,33 +73,34 @@ This project fork from: [jhuckaby/Cronicle](https://github.com/jhuckaby/Cronicle
 		+ [web_direct_connect](#web_direct_connect)
 		+ [web_socket_use_hostnames](#web_socket_use_hostnames)
 		+ [socket_io_transports](#socket_io_transports)
-	* [Storage Configuration](#storage-configuration)
+	* [Cấu hình Storage](#cấu-hình-storage)
 		+ [Filesystem](#filesystem)
 		+ [Couchbase](#couchbase)
 		+ [Amazon S3](#amazon-s3)
-	* [Web Server Configuration](#web-server-configuration)
-	* [User Configuration](#user-configuration)
-	* [Email Configuration](#email-configuration)
-- [Web UI](#web-ui)
-	* [Home Tab](#home-tab)
-		+ [General Stats](#general-stats)
-		+ [Active Jobs](#active-jobs)
-		+ [Upcoming Events](#upcoming-events)
-	* [Schedule Tab](#schedule-tab)
-		+ [Edit Event Tab](#edit-event-tab)
-			- [Event ID](#event-id)
-			- [Event Name](#event-name)
-			- [Event Enabled](#event-enabled)
-			- [Event Category](#event-category)
-			- [Event Target](#event-target)
-				* [Algorithm](#algorithm)
-				* [Multiplexing](#multiplexing)
-			- [Event Plugin](#event-plugin)
-			- [Event Timing](#event-timing)
-			- [Event Concurrency](#event-concurrency)
-			- [Event Timeout](#event-timeout)
-			- [Event Retries](#event-retries)
-			- [Event Options](#event-options)
+		+ [Minio](#minio)
+	* [Cấu hình web server](#cấu-hình-web-server)
+	* [Cấu hình user](#cấu-hình-user)
+	* [Cấu hình email](#cấu-hình-email)
+- [Giao diện web](#giao-diện-web)
+	* [Home](#home-tab)
+		+ [Thống kê](#thống-kê)
+		+ [Tiến trình đang chạy](#tác-vụ-đang-chạy)
+		+ [Sự kiện sắp diễn ra](#sự-kiện-sắp-diễn-ra)
+	* [Lên lịch](#lên-lịch)
+		+ [Chỉnh sửa sự kiện](#chỉnh-sửa-sự-kiện)
+			- [ID sự kiện](#id-sự-kiện)
+			- [Tên sự kiện](#tên-sự-kiện)
+			- [Kích hoạt sự kiện](#kích-hoạt-sự-kiện)
+			- [Danh mục sự kiện](#danh-mục-sự-kiện)
+			- [Mục tiêu thực hiện](#mục-tiêu-thực-hiện)
+				* [Giải thuật lựa chọn](#giải-thuật-lựa-chọn)
+				* [Ghép kênh](#ghép-kênh)
+			- [Plugin chạy sự kiện](#plugin-chạy-sự-kiện)
+			- [Lịch chạy](#lịch-chạy)
+			- [Sự kiện đồng thời](#sự-kiện-đồng-thời)
+			- [Hết thời gian xử lý](#hết-thời-gian-xử-lý)
+			- [Thử lại sự kiện](#thử-lại-sự-kiện)
+			- [Các tùy chọn sự kiện](#các-tùy-chọn-sự-kiện)
 				* [Run All Mode](#run-all-mode)
 				* [Detached Mode](#detached-mode)
 				* [Allow Queued Jobs](#allow-queued-jobs)
@@ -197,9 +191,9 @@ This project fork from: [jhuckaby/Cronicle](https://github.com/jhuckaby/Cronicle
 
 </details>
 
-## Glossary
+## Bảng chú giải
 
-A quick introduction to some common terms used in Cronicle:
+Giới thiệu nhanh về một số thuật ngữ phổ biến được sử dụng trong
 
 | Term | Description |
 |------|-------------|
@@ -3468,6 +3462,15 @@ Cronicle was built using these awesome Node modules:
 | [socket.io-client](https://www.npmjs.com/package/socket.io-client) | Client library for server-to-server socket.io connections. | MIT |
 | [uglify-js](https://www.npmjs.com/package/uglify-js) | JavaScript parser, mangler/compressor and beautifier toolkit. | BSD-2-Clause |
 | [zxcvbn](https://www.npmjs.com/package/zxcvbn) | Realistic password strength estimation, from Dropbox. | MIT |
+
+
+This project fork from: [jhuckaby/Cronicle](https://github.com/jhuckaby/Cronicle) with some new features:
+
+* OAuth 2
+* Vietnamese language
+* Upload new plugin
+* Built-in nodejs plugin
+* Docker
 
 # License
 
