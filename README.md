@@ -25,9 +25,9 @@
 <details><summary>Xem chi tiết</summary>
 
 <!-- toc -->
-* [Bảng chú giải](#bảng-chú-giải)
-- [cài đặt](#installation)
-- [Setup](#setup)
+- [Bảng chú giải](#bảng-chú-giải)
+- [Cài đặt](#cài-đặt)
+- [Thiết lập](#thiết-lập)
 	* [Một sever duy nhất](#cài-đặt-với-một-sever-duy-nhất)
 	* [Một server chính với nhiều Workers](#một-server-chính-với-nhiều)
 	* [Cụm nhiều servercluser](#cụm-nhiều-server)
@@ -209,7 +209,7 @@ Giới thiệu nhanh về một số thuật ngữ phổ biến được sử d�
 | **Event** | An entry in the schedule, which may run once or many times at any interval.  Each event points to a Plugin, and a server or group to run it. |
 | **Job** | A running instance of an event.  If an event is set to run hourly, then a new job will be created every hour. |
 
-# Installation
+# Cài đặt
 
 Please note that Cronicle currently only works on POSIX-compliant operating systems, which basically means Unix/Linux and OS X.  You'll also need to have [Node.js LTS](https://nodejs.org/en/download/) pre-installed on your server.  Please note that we **only support the Active LTS versions of Node.js**.  Cronicle may not work on the "current" release channel.  See [Node.js Releases](https://nodejs.org/en/about/releases/) for details.
 
@@ -233,7 +233,7 @@ node bin/build.js dist
 
 Replace `v1.0.0` with the desired Cronicle version from the [release list](https://github.com/jhuckaby/Cronicle/releases), or `master` for the head revision (unstable).
 
-# Setup
+# Thiết lập
 
 If this is your first time installing, please read the [Configuration](#configuration) section first.  You'll likely want to customize a few configuration parameters in the `/opt/cronicle/conf/config.json` file before proceeding.  At the very least, you should set these properties:
 
